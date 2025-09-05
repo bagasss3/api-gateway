@@ -1,4 +1,38 @@
 port: ":8080"
-service:
-  cake-service: "http://localhost:8001"
-  servis2:
+
+auth:
+  introspect_url: "http://localhost:9000/oauth/introspect"
+
+cors:
+  allowed_origins: ["*"]
+  allowed_methods: ["GET","POST","PUT","PATCH","DELETE","OPTIONS"]
+  allowed_headers: ["Authorization","Content-Type","X-API-Key"]
+  credentials: false
+
+limits:
+  global_rps: 200
+  per_ip_rps: 20
+  per_ip_burst: 40
+  concurrency: 500
+  max_body_mb: 10
+
+api_keys: ["test123","xxxxxxxxxxx"]
+
+routes:
+  - name: "user"
+    prefix: "/api/v1"
+    strip_prefix: ""
+    auth: "none"                   # jwt | api_key | none
+    require_api_key: true         # for public path only
+    public_prefixes: ["/public", "/health"]
+    targets:
+      - "http://localhost:8000"
+
+  # - name: "cakes"
+  #   prefix: "/api/v1/cakes"
+  #   strip_prefix: "/api/v1/cakes"
+  #   auth: "none"
+  #   require_api_key: true
+  #   targets:
+  #     - "http://localhost:7002"
+

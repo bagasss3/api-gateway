@@ -1,9 +1,9 @@
 package main
 
 import (
-	"api-gateway/src/console"
+	"api-gateway/internal/cmd"
 )
 
 func main() {
-	console.Execute()
+	cmd.Execute()
 }
